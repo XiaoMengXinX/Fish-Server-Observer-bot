@@ -29,7 +29,7 @@ func main() {
 		if update.Message != nil {
 			message := update.Message
 			atStr := strings.TrimPrefix(update.Message.CommandWithAt(), update.Message.Command())
-			if !message.IsCommand() || (atStr != "" && atStr != "@"+bot.Self.UserName) || !in(strconv.Itoa(int(message.From.ID)), users) {
+			if !message.IsCommand() || (atStr != "" && atStr != "@"+bot.Self.UserName) || (!in(strconv.Itoa(int(message.From.ID)), users) && len(botUsers) > 0) {
 				continue
 			}
 			switch message.Command() {
