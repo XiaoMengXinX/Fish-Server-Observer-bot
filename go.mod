@@ -1,4 +1,4 @@
-module github.com/XiaoMengXinX/WTF-with-my-server-bot
+module github.com/XiaoMengXinX/Fish-Server-Observer-bot
 
 go 1.18
 
