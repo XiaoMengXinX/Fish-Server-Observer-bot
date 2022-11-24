@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"fmt"
@@ -63,9 +63,11 @@ func GetNetworkAllStats() string {
 	stats, _ := net.IOCounters(false)
 	time.Sleep(time.Duration(sleepTime) * time.Millisecond)
 	stats2, _ := net.IOCounters(false)
+	received := int64(stats2[0].BytesRecv)
+	sent := int64(stats2[0].BytesSent)
 	in := float64(stats2[0].BytesRecv-stats[0].BytesRecv) / (float64(sleepTime) / 1000)
 	out := float64(stats2[0].BytesSent-stats[0].BytesSent) / (float64(sleepTime) / 1000)
-	netStats := fmt.Sprintf("Network: %s/s in  %s/s out", byteCountIEC(int64(in)), byteCountIEC(int64(out)))
+	netStats := fmt.Sprintf("Network: %s Received %s Sent, %s/s in %s/s out", byteCountIEC(received), byteCountIEC(sent), byteCountIEC(int64(in)), byteCountIEC(int64(out)))
 	return netStats
 }
 
@@ -76,9 +78,11 @@ func GetNetworkStats() string {
 	stats2, _ := net.IOCounters(true)
 	var netStats string
 	for i, stat := range stats {
+		received := int64(stats2[i].BytesRecv)
+		sent := int64(stats2[i].BytesSent)
 		in := float64(stats2[i].BytesRecv-stat.BytesRecv) / (float64(sleepTime) / 1000)
 		out := float64(stats2[i].BytesSent-stat.BytesSent) / (float64(sleepTime) / 1000)
-		netStats += fmt.Sprintf("%s:\t%s/s in  %s/s out", stat.Name, byteCountIEC(int64(in)), byteCountIEC(int64(out)))
+		netStats += fmt.Sprintf("%s:\t %s Received %s Sent, %s/s in %s/s out", stat.Name, byteCountIEC(received), byteCountIEC(sent), byteCountIEC(int64(in)), byteCountIEC(int64(out)))
 		if i != len(stats)-1 {
 			netStats += "\n"
 		}

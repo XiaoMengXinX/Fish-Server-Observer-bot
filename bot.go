@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/XiaoMengXinX/Fish-Server-Observer-bot/utils"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
@@ -35,18 +36,18 @@ func main() {
 			switch message.Command() {
 			case "status":
 				var text string
-				text += GetHostInfo() + "\n"
-				text += GetCPUPercents() + "\n"
-				text += GetMemStats() + "\n"
-				text += GetRootUsage() + "\n"
-				text += GetNetworkAllStats()
+				text += utils.GetHostInfo() + "\n"
+				text += utils.GetCPUPercents() + "\n"
+				text += utils.GetMemStats() + "\n"
+				text += utils.GetRootUsage() + "\n"
+				text += utils.GetNetworkAllStats()
 				sendMsg(bot, message, text)
 			case "cpu_status":
-				sendMsg(bot, message, GetCPUCoresPercents())
+				sendMsg(bot, message, utils.GetCPUCoresPercents())
 			case "parts_status":
-				sendMsg(bot, message, GetPartsStats())
+				sendMsg(bot, message, utils.GetPartsStats())
 			case "network_status":
-				sendMsg(bot, message, GetNetworkStats())
+				sendMsg(bot, message, utils.GetNetworkStats())
 			}
 		}
 	}
